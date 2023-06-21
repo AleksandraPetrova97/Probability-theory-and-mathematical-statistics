@@ -39,7 +39,7 @@ n_2_basket = bernulli(11, 2) # число общих исходов во 2 ко�
 
 # общая вероятность
 
-P = (m_1/n_1_basket) * (m_4/n_2_basket) + (m_2/n_1_basket * m_5/n_2_basket) + (m_3/n_1_basket * m_6/n_2_basket)
+P = (m_1/n_1_basket * m_4/n_2_basket) + (m_2/n_1_basket * m_5/n_2_basket) + (m_3/n_1_basket * m_6/n_2_basket)
 
 print(f' Вероятность равна - {round(P*100,2)}%')
 
