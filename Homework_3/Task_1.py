@@ -2,25 +2,35 @@
 # Посчитать (желательно без использования статистических методов наподобие std, var, mean) 
 # среднее арифметическое, среднее квадратичное отклонение, смещенную и несмещенную оценки дисперсий для данной выборки.
 
-# функция для расчета среднего арифметического
 
 array = ([100, 80, 75, 77, 89, 33, 45, 25, 65, 17, 30, 24, 57, 55, 70, 75, 65, 84, 90, 150])
 
-summa = 0
+# среднее арифметическое
 
+summa = 0
 for i in range(len(array)):
     summa = summa + array[i]
+summa = summa/len(array)
 
-summa = summa/len(array)    
+# среднее квадратичное отклонение
 
-def deviation(arr,summ):
-    summ = 0
-    for i in range(len(arr)):
-        summ = summ + (arr[i] - summa)**2
-    return summ
+A = 0
+for i in array:
+    A = A + ((i - summa)**2)
+quad = (A/len(array))**0.5
 
-array.sort()
+# смещенная дисперсия и несмещенная дисперсия
 
-print(summa)
-print(deviation(array,summa))
+A = 0
+for i in array:
+    A = A + ((i - summa)**2)
+    variance_offset = A/len(array)
+    variance_no_offset = A/(len(array)-1)
+
+
+print(f'среднее арифметическое: {summa}')
+print(f'среднее квадратичное отклонение: {round(quad,4)}')
+print(f'смещенная дисперсия: {variance_offset}')
+print(f'Несмещенная дисперсия: {round(variance_no_offset,4)}')
+
 
