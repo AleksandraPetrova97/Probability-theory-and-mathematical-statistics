@@ -11,6 +11,7 @@
 # ж). ниже 166 см.
 
 import scipy.stats as stats
+
 def z_value(height):
     return (height-174)/8
 
