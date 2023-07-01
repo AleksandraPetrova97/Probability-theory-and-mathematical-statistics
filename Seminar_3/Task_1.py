@@ -15,4 +15,4 @@ import numpy as np
 # print(t)
 # print(stats.t.ppf(0.975,398))
 
-print(stats.norm.ppf(0.01))
+print(stats.norm.ppf(0.975))
