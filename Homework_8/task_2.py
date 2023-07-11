@@ -13,4 +13,4 @@ sigma = np.std(x,ddof=1)
 n = len(x)
 t = stats.t.ppf(0.95, 9)
 
-print(f'Доверительный интервал = {(M_x - t) * (sigma / np.sqrt(n)) , (M_x + t) * (sigma / np.sqrt(n))} ')
+print(f'Доверительный интервал = {M_x - t * sigma / np.sqrt(n) , M_x + t * sigma / np.sqrt(n)} ')
