@@ -60,23 +60,75 @@
 # plt.tight_layout()
 # plt.show()    
 
-
-
-import scipy.stats as stats
+from scipy import stats
 import numpy as np
 import matplotlib.pyplot as plt
+from sklearn.linear_model import LinearRegression
 
-x1 = np.array([10, 8, 13, 9, 11, 14, 6, 4, 12, 7, 5])
-y1 = np.array([8.04, 6.95, 7.58, 8.81, 8.33, 9.96, 7.24, 4.26, 10.84, 4.82, 5.68])
+x = np.array([10, 8, 13, 9, 11, 14, 6, 4, 12, 7, 5])
+y = np.array([8.04, 6.95, 7.58, 8.81, 8.33, 9.96, 7.24, 4.26, 10.84, 4.82, 5.68])
 
-plt.subplot(231)
-plt.scatter(x1, y1)
-plt.title('Experiment 1')
-coef1, pval1 = stats.pearsonr(x1, y1)
+model = LinearRegression()
+x = x.reshape(-1, 1)
+model.fit(x, y)
+r_sq = model.score(x, y)
+
+const = model.intercept_
+beta = model.coef_[0]
+print(const, beta)
+
+plt.scatter(x, y)
+plt.plot(x, beta * x + const, 'g')
+plt.title(f'R2 = {round(r_sq, 3)}')
 plt.xlabel('x')
 plt.ylabel('y')
-plt.text(4, 11, f'r={coef1:.2f}')
-
-
-plt.tight_layout()
 plt.show()
+
+# проверка остатков
+
+y_hat = beta * x + const
+y_hat = y_hat.reshape(1, -1)
+resid = y - y_hat
+print(resid)
+
+plt.figure(figsize=(3,3))
+plt.scatter(x,resid)
+plt.xlabel('x')
+plt.ylabel('residuals')
+plt.show()
+
+print(stats.shapiro(resid))
+
+# гомоскедантичность
+
+plt.figure(figsize=(3,3))
+plt.scatter(y_hat,resid)
+plt.xlabel('y_hat')
+plt.ylabel('residuals')
+plt.show()
+
+# значимость модели
+
+n = x.shape[0]
+m = 1
+
+k1 = m
+k2 = n - m - 1
+
+print(k1, k2)
+
+alpha = 0.05
+
+t = stats.f.ppf(1 - alpha, k1, k2)
+print(t)
+
+R2 = r_sq
+F = (R2 / k1) / ((1 - R2) / k2)
+print(F)
+
+import statsmodels.api as sm
+
+x = sm.add_constant(x) # функция добавления константы
+model = sm.OLS(y, x) # метод наименьших квадратов
+results = model.fit() # обучаем модель
+print(results.summary()) # выводим всю суммарную информацию
