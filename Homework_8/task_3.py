@@ -9,6 +9,6 @@ from scipy import stats
 M_x = 174.2
 n = 27
 sigma = np.sqrt(25)
-z = stats.norm.ppf(0.95)
+z = stats.norm.ppf(0.975)
 
 print(f'Доверительный интервал: {M_x - z * sigma / np.sqrt(n) , M_x + z * sigma / np.sqrt(n)}')

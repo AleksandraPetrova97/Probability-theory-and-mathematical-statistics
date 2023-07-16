@@ -17,7 +17,7 @@ cov = np.mean(zp*ks) - np.mean(zp) * np.mean(ks) #Ковариация в руч
 print(f'Ковариация в ручную: {cov}')
 print(f'Ковариация смещенная: {np.cov(zp,ks,ddof= 0)}') #Смещенная ковариация
 
-pirson = cov / np.std(zp, ddof= 0) * np.std(ks, ddof= 0) #коэффециент Пирсона
+pirson = cov / (np.std(zp, ddof= 0) * np.std(ks, ddof= 0)) #коэффециент Пирсона
 print(f'Коэффециент Пирсона: {pirson}')
 
 print(f'Линейная зависимость и сила зависимости: {np.corrcoef(zp,ks)}') # Линейная зависимость есть, и она сильная

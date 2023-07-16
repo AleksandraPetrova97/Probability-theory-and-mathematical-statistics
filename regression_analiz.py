@@ -44,6 +44,7 @@ alpha = 1e-6
 # mse = (2/n) * np.sum((B1*X-y)*X)
 
 B1 = 0.1
+
 # n = 8
 
 for i in range (10):
