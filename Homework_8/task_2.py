@@ -11,6 +11,12 @@ x = np.array([131, 125, 115, 122, 131, 115, 107, 99, 125, 111])
 M_x = np.mean(x)
 sigma = np.std(x,ddof=1)
 n = len(x)
-t = stats.t.ppf(0.95, 9)
+print(n, M_x, sigma)
 
-print(f'Доверительный интервал = {M_x - t * sigma / np.sqrt(n) , M_x + t * sigma / np.sqrt(n)} ')
+p = 0.95
+alpha = 1 - p
+
+t1 = stats.t.ppf(alpha / 2, df = n - 1)
+t2 = stats.t.ppf(1 - alpha / 2, df = n - 1)
+
+print(f'Доверительный интервал = {M_x + t1 * sigma / np.sqrt(n) , M_x + t2 * sigma / np.sqrt(n)} ')

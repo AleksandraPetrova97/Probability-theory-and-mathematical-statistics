@@ -9,32 +9,37 @@ import scipy.stats as stats
 import numpy as np
 import matplotlib.pyplot as plt
 
-zp = np.array([35, 45, 190, 200, 40, 70, 54, 150, 120, 110])
-ks = np.array([401, 574, 874, 919, 459, 739, 653, 902, 746, 832])
+salary = np.array([35, 45, 190, 200, 40, 70, 54, 150, 120, 110])
+scoring = np.array([401, 574, 874, 919, 459, 739, 653, 902, 746, 832])
 
-cov = np.mean(zp*ks) - np.mean(zp) * np.mean(ks) #Ковариация в ручную
+salary_m = salary.mean()
+scoring_m = scoring.mean()
+
+cov = ((salary - salary_m) * (scoring - scoring_m)).sum() / (len(scoring)- 1) #Ковариация в ручную
 
 print(f'Ковариация в ручную: {cov}')
-print(f'Ковариация смещенная: {np.cov(zp,ks,ddof= 0)}') #Смещенная ковариация
 
-pirson = cov / (np.std(zp, ddof= 0) * np.std(ks, ddof= 0)) #коэффециент Пирсона
+print(salary.var(ddof=1), scoring.var(ddof=1))
+print(np.cov(salary, scoring, ddof=1)) 
+
+pirson = cov / (np.std(salary, ddof= 0) * np.std(scoring, ddof= 0)) #коэффециент Пирсона
 print(f'Коэффециент Пирсона: {pirson}')
 
-print(f'Линейная зависимость и сила зависимости: {np.corrcoef(zp,ks)}') # Линейная зависимость есть, и она сильная
+print(f'Линейная зависимость и сила зависимости: {np.corrcoef(salary,scoring)}') # Линейная зависимость есть, и она сильная
 
-x = np.mean(zp)
+x = np.mean(salary)
 t_x = stats.t.ppf(0.95,9)
-sigma_x = np.std(zp,ddof=0)
-n_x = np.sqrt(len(zp))
+sigma_x = np.std(salary,ddof=0)
+n_x = np.sqrt(len(salary))
 print(f' Доверительный интервал у среднего значения заработной платы: {x - t_x * sigma_x / n_x, x + t_x * sigma_x / n_x}')
 
-y = np.mean(ks)
+y = np.mean(scoring)
 t_y = stats.t.ppf(0.95,9)
-sigma_y = np.std(ks,ddof=0)
-n_y = np.sqrt(len(ks))
+sigma_y = np.std(scoring,ddof=0)
+n_y = np.sqrt(len(scoring))
 print(f' Доверительный интервал у среднего значения кредитного скоринга: {y - t_y * sigma_y / n_y, y + t_y * sigma_y / n_y}')
 
-plt.scatter(zp, ks)
+plt.scatter(salary, scoring)
 plt.title('Experiment')
 plt.xlabel('wages')
 plt.ylabel('credit scoring')
