@@ -10,7 +10,7 @@ a = np.array([6.9, 6.1, 6.2, 6.8, 7.5, 6.3, 6.4, 6.9, 6.7, 6.1])
 
 x = np.mean(a)
 
-t = stats.t.ppf(0.975,9)
+t = stats.t.ppf(0.975,1500)
 print(t)
 
 D = np.std(a,ddof=1)
